@@ -8,8 +8,8 @@ const meusSites = [
     },
     {
         url: "loteria.vinic.dev",
-        nome: "Loteria Inteligente",
-        descricao: "Simulador, gerador de combinações, estatísticas de sorteios e conferência rápida de jogos de loteria.",
+        nome: "Histórico Loteria",
+        descricao: "Histórico para conferência rápida de jogos de loteria.",
         tag: "Utilitário & Sorte",
         icone: "ph-clover"
     }
