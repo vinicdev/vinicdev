@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vinicdev // project hub</title>
+    
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter & Space Grotesk & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script src="./js/tailwind.config.js" defer></script>
+
+</head>
+<body class="min-h-screen flex flex-col relative selection:bg-indigo-500 selection:text-white">
+
+    <div class="fixed inset-0 bg-grid-pattern pointer-events-none z-0"></div>
+    <div class="fixed top-[-10%] left-[-10%] w-96 h-96 bg-indigo-600/20 rounded-full mix-blend-screen filter blur-[110px] animate-blob pointer-events-none z-0"></div>
+    <div class="fixed top-[20%] right-[-10%] w-96 h-96 bg-emerald-600/15 rounded-full mix-blend-screen filter blur-[110px] animate-blob animation-delay-2000 pointer-events-none z-0"></div>
+    <div class="fixed bottom-[-10%] left-[20%] w-96 h-96 bg-fuchsia-600/15 rounded-full mix-blend-screen filter blur-[110px] animate-blob animation-delay-4000 pointer-events-none z-0"></div>
+
+    <header class="relative z-10 w-full max-w-6xl mx-auto px-6 pt-12 pb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+            <div class="relative group">
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 rounded-2xl blur opacity-70 group-hover:opacity-100 transition duration-500"></div>
+                <div class="relative w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center border border-slate-800 shadow-xl">
+                    <span class="font-mono font-bold text-2xl bg-gradient-to-br from-white via-slate-200 to-indigo-400 bg-clip-text text-transparent">
+                        v/d
+                    </span>
+                </div>
+            </div>
+            <div>
+                <div class="flex items-center gap-3">
+                    <h1 class="font-display font-bold text-3xl md:text-4xl tracking-tight text-white lowercase">
+                        vinicdev
+                    </h1>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                        online
+                    </span>
+                </div>
+                <p class="text-slate-400 text-sm mt-1 font-sans">
+                     Ecossistema de aplicações, experimentos e projetos web.
+                </p>
+            </div>
+        </div>
+
+        <!-- Contador de sites ativos -->
+        <div class="flex items-center gap-3 self-stretch md:self-auto justify-end">
+            <div class="px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 backdrop-blur-md flex items-center gap-2.5">
+                <i class="ph-duotone ph-Stack text-indigo-400 text-lg"></i>
+                <span class="text-xs font-mono text-slate-400">Nodes ativos:</span>
+                <span id="site-counter" class="text-sm font-mono font-bold text-white bg-slate-800 px-2 py-0.5 rounded-md">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative z-10 flex-1 w-full max-w-6xl mx-auto px-6 py-4 flex flex-col">
+        
+        <!-- Barra de Pesquisa e Dica de Código -->
+        <div class="mb-8 flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between bg-slate-900/50 border border-slate-800/80 p-3 rounded-2xl backdrop-blur-md">
+            <div class="relative flex-1">
+                <i class="ph ph-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-lg"></i>
+                <input 
+                    type="text" 
+                    id="search-input" 
+                    placeholder="Filtrar projetos em vinicdev (ex: bigambitions, loteria...)" 
+                    class="w-full pl-11 pr-4 py-2 bg-slate-950/70 border border-slate-800/80 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/60 focus:ring-1 focus:ring-indigo-500/40 transition-all"
+                >
+            </div>
+            <div class="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-950/50 border border-slate-800/50 text-xs font-mono text-slate-400">
+                <i class="ph-fill ph-terminal-window text-indigo-400"></i>
+                <span>Edite a constante <code class="text-indigo-300 font-semibold">meusSites</code> no código para fixar novos links</span>
+            </div>
+        </div>
+
+        <!-- Grid onde as caixinhas serão geradas dinamicamente -->
+        <div id="links-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
+            <!-- Os cards serão injetados aqui via JavaScript -->
+        </div>
+
+        <!-- Estado vazio para busca sem resultados -->
+        <div id="empty-state" class="hidden flex-col items-center justify-center py-20 text-center">
+            <div class="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500 mb-4">
+                <i class="ph-duotone ph-magnifying-glass-minus text-3xl"></i>
+            </div>
+            <h3 class="text-lg font-display font-semibold text-white">Nenhum projeto encontrado</h3>
+            <p class="text-slate-400 text-sm mt-1 max-w-sm">
+                Não encontramos nenhum link correspondente à sua busca. Tente outro termo ou limpe o filtro.
+            </p>
+        </div>
+
+    </main>
+
+    <!-- Toast de Notificação -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 border border-slate-700 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3">
+        <i class="ph-fill ph-check-circle text-emerald-400 text-xl"></i>
+        <span id="toast-msg" class="text-sm font-medium">Link copiado!</span>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="relative z-10 w-full max-w-6xl mx-auto px-6 py-8 mt-12 border-t border-slate-900/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-mono">
+        <div class="flex items-center gap-2">
+            <span class="text-slate-300 font-bold">vinicdev</span>
+            <span>—</span>
+            <span>todos os links abrem em uma nova guia (<code class="text-indigo-400">target="_blank"</code>)</span>
+        </div>
+    </footer>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>
